@@ -5,7 +5,9 @@
 ## Installation
 
 You can install Validolphin using npm. Run the following command:
-
+```
+npm install validolphin
+```
 
 ## Usage
 
