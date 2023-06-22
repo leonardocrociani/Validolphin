@@ -1,6 +1,6 @@
 class Validolphin {
 
-    availableKeys = ['validables', 'unexpectedKeyError', 'errorsAtTime'];
+    availableKeys = ['validables', 'unexpectedKeyError', 'errorsAtTime', 'missingKeyError'];
     availableValidablesKeys = ['name', 'schema'];
 
     constructor(configObject) {
@@ -80,6 +80,16 @@ class Validolphin {
                                 if (configObj.schema[key].elCount) {
                                     if (value.length != configObj.schema[key].elCount) {
                                         errors.push('Element count not respected for key -> ' + key);
+                                    }
+                                }
+                                if (configObj.schema[key].minEl) {
+                                    if (value.length < configObj.schema[key].minEl) {
+                                        errors.push('Element minimum element count not respected for key -> ' + key);
+                                    }
+                                }
+                                if (configObj.schema[key].maxEl) {
+                                    if (value.length > configObj.schema[key].maxEl) {
+                                        errors.push('Element maximum element count not respected for key -> ' + key);
                                     }
                                 }
                                 if (configObj.schema[key].homogen) {
