@@ -1,4 +1,4 @@
-class Valigator {
+class Validolphin {
 
     availableKeys = ['validables', 'unexpectedKeyError', 'errorsAtTime'];
     availableValidablesKeys = ['name', 'schema'];
@@ -25,12 +25,25 @@ class Valigator {
             this[configObj.name] = toValid => {
                 try {
                     const errors = [];
+                    const required = [];
+                    for (const key in configObj.schema) {
+                        if (configObj.schema[key].nullable != true) {
+                            required.push(key);
+                        }
+                    }
+                    for (const req of required) {
+                        if (!Object.keys(toValid).includes(req)) errors.push(`${configObj.missingKeyError ? configObj.missingKeyError : 'Missing required key'} -> ${req}`)
+                    }
                     for (const key in toValid) {
                         if (!Object.keys(configObj.schema).includes(key)) {
                             return { valid: false, error: `${configObj.unexpectedKeyError ? configObj.unexpectedKeyError : 'Unexpected key'} -> ${key}` }
                         }
                         else {
                             const value = toValid[key];
+                            if ((value == null || value == undefined) && configObj.schema[key].nullable != true) {
+                                errors.push('Not nullable value, find null -> ', value);
+                                continue
+                            }
                             if (configObj.schema[key].type) {
                                 if (
                                     typeof value != configObj.schema[key].type.name.toLowerCase() &&
@@ -83,9 +96,6 @@ class Valigator {
                                     }
                                 }
                             }
-                            if ((value == null || value == undefined) && configObj.schema[key].nullable != true) {
-                                errors.push('Not nullable value, find null -> ', value);
-                            }
                         }
                     }
                     if (errors.length > 0) {
@@ -99,13 +109,16 @@ class Valigator {
         }
     }
 
-    static printGator() {
-        console.log("  __   __   ______     __         __     ______     ______     ______   ______     ______    ")
-        console.log(" /\\ \\ / /  /\\  __ \\   /\\ \\       /\\ \\   /\\  ___\\   /\\  __ \\   /\\__  _\\ /\\  __ \\   /\\  == \\   ")
-        console.log(" \\ \\ \\'/   \\ \\  __ \\  \\ \\ \\____  \\ \\ \\  \\ \\ \\__ \\  \\ \\  __ \\  \\/_/\\ \\/ \\ \\ \\/\\ \\  \\ \\  __<   ")
-        console.log("  \\ \\__|    \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_\\  \\ \\_____\\  \\ \\_\\ \\_\\    \\ \\_\\  \\ \\_____\\  \\ \\_\\ \\_\\ ")
-        console.log("   \\/_/      \\/_/\\/_/   \\/_____/   \\/_/   \\/_____/   \\/_/\\/_/     \\/_/   \\/_____/   \\/_/ /_/ ")
+    static printDolph() {
+        console.log(`
+            _    _____    __    ________  ____  __    ____  __  _______   __
+            | |  / /   |  / /   /  _/ __ \\/ __ \\/ /   / __ \\/ / / /  _/ | / /
+            | | / / /| | / /    / // / / / / / / /   / /_/ / /_/ // //  |/ / 
+            | |/ / ___ |/ /____/ // /_/ / /_/ / /___/ ____/ __  // // /|  /  
+            |___/_/  |_/_____/___/_____/\\____/_____/_/   /_/ /_/___/_/ |_/   
+            version: 1.0.0
+        `)
     }
 }
 
-module.exports = Valigator;
+module.exports = Validolphin;
