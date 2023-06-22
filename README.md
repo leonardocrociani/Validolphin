@@ -28,12 +28,14 @@ const config = {
       name : <String>                 /* THE NAME OF THE FUNCTION TO CALL IF YOU WANT TO VALIDATE THE ASSOCIATED OBJECT */,
       schema : {                      /* THE VALIDATION SCHEMA OF THE OBJECT */
         field : {
-          type: <Number|String|Array>, 
+          type: <Number|String|Array|Boolean>, 
           minVal : <Number>,            /* SET ONLY IF type == Number */  
           maxVal : <Number>,            /* SET ONLY IF type == Number */ 
           minLen : <Number>,            /* SET ONLY IF type == String */ 
           maxLen : <Number>,            /* SET ONLY IF type == String */ 
           elCount: <Number>,            /* SET ONLY IF type == Array */ 
+          minEl  : <Number>,            /* SET ONLY IF type == Array */
+          maxEl  : <Number>,            /* SET ONLY IF type == Array */
           homogen: <Boolean>,           /* SET ONLY IF type == Array */ 
           nullable: <Boolean>           /* DEFAULT : false */ 
         },
