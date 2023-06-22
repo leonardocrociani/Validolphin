@@ -84,12 +84,12 @@ class Validolphin {
                                 }
                                 if (configObj.schema[key].minEl) {
                                     if (value.length < configObj.schema[key].minEl) {
-                                        errors.push('Element minimum element count not respected for key -> ' + key);
+                                        errors.push('Minimum element count not respected for key -> ' + key);
                                     }
                                 }
                                 if (configObj.schema[key].maxEl) {
                                     if (value.length > configObj.schema[key].maxEl) {
-                                        errors.push('Element maximum element count not respected for key -> ' + key);
+                                        errors.push('Maximum element count not respected for key -> ' + key);
                                     }
                                 }
                                 if (configObj.schema[key].homogen) {
@@ -126,7 +126,7 @@ class Validolphin {
             | | / / /| | / /    / // / / / / / / /   / /_/ / /_/ // //  |/ / 
             | |/ / ___ |/ /____/ // /_/ / /_/ / /___/ ____/ __  // // /|  /  
             |___/_/  |_/_____/___/_____/\\____/_____/_/   /_/ /_/___/_/ |_/   
-            Version: 1.0.4
+            Version: 1.0.5
         `)
     }
 }
