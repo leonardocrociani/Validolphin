@@ -12,7 +12,47 @@ npm install validolphin
 ```
 
 ## Usage
+Import the package main class
+```javascript
+const Validolphin = require('validolphin');
+```
+Create a config package
+```javascript
+const config = {
+  unexpectedKeyError : <String>,      /* A CUSTOM ERROR WHEN AN OBECT TO VALIDATE HAS A KEY THAT IS NOT EXPECTED */
+  unexpectedMissingError : <String>,  /* A CUSTOM ERROR WHEN AN OBECT TO VALIDATE HAS A KEY THAT IS MISSING */
+  errorsAtTime : <Number>,            /* THE NUMBER OF ERRORS TO DISPLAY IN THE RETURNED OBJECT, DEFAULT = 3 */
+  validables : [                      /* AN ARRAY OF VALUES THAT DEFINES THE VALIDABLES OBJECTS */
+    ...
+    {
+      name : <String>                 /* THE NAME OF THE FUNCTION TO CALL IF YOU WANT TO VALIDATE THE ASSOCIATED OBJECT */,
+      schema : {                      /* THE VALIDATION SCHEMA OF THE OBJECT */
+        field : {
+          type: <Number|String|Array>, 
+          minVal : <Number>,            /* SET ONLY IF type == Number */  
+          maxVal : <Number>,            /* SET ONLY IF type == Number */ 
+          minLen : <Number>,            /* SET ONLY IF type == String */ 
+          maxLen : <Number>,            /* SET ONLY IF type == String */ 
+          elCount: <Number>,            /* SET ONLY IF type == Array */ 
+          homogen: <Boolean>,           /* SET ONLY IF type == Array */ 
+          nullable: <Boolean>           /* DEFAULT : false */ 
+        },
+        ...
+    }
+    ...
+  ]
+}
+```
+Create the validation object
+```javascript
+const validator = new Validolphin(config);
+```
+Now, you can call the functions with 
+```javascript
+validator.<name_of_the_validable_object>( object_to_validate )
+```
 
+## Example
 Here's an example of how to use Validolphin in your JavaScript code:
 
 ```javascript
