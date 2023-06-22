@@ -1,6 +1,6 @@
 # Validolphin
 
-![Validolphin Logo](validolphin-logo.png)
+![Validolphin Logo](validolphin-logo.png | width=200 height=200)
 
 **Validolphin** is a lightweight npm package that provides a zero-dependency system for avoiding tedious data validation.
 
