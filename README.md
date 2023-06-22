@@ -67,6 +67,7 @@ const config = {
         username: { type: String, minLen: 4, maxLen: 20 },
         email: { type: String, maxLen: 100 },
         age: { type: Number, minVal: 18, maxVal: 100 },
+        medals : { type: Array, nullable: true, homogen: true }
       }
     }
   ]
