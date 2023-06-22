@@ -3,7 +3,7 @@
 <img alt="Validolphin Logo" src="validolphin-logo.png" width=100 height=100 />
 
 **Validolphin** is a lightweight npm package that provides a zero-dependency system for avoiding tedious data validation.
-usable both in **FRONTEND** and in **BACKEND**
+Usable both in **FRONTEND** and in **BACKEND**
 
 ## Installation
 
