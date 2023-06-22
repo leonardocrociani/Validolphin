@@ -11,6 +11,10 @@ You can install Validolphin using npm. Run the following command:
 ```
 npm install validolphin
 ```
+Alternatively, you can import Validolphin using this HTML tag
+```html
+<script type="application/javascript" src="https://cdn.jsdelivr.net/gh//leonardocrociani/Validolphin/Validolphin-Frontend.js"></script>
+```
 
 ## Usage
 Import the package main class
