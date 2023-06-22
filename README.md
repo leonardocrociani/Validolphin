@@ -20,7 +20,7 @@ Create a config package
 ```javascript
 const config = {
   unexpectedKeyError : <String>,      /* A CUSTOM ERROR WHEN AN OBECT TO VALIDATE HAS A KEY THAT IS NOT EXPECTED */
-  missingKeyError : <String>,  /* A CUSTOM ERROR WHEN AN OBECT TO VALIDATE HAS A KEY THAT IS MISSING */
+  missingKeyError : <String>,         /* A CUSTOM ERROR WHEN AN OBECT TO VALIDATE HAS A KEY THAT IS MISSING */
   errorsAtTime : <Number>,            /* THE NUMBER OF ERRORS TO DISPLAY IN THE RETURNED OBJECT, DEFAULT = 3 */
   validables : [                      /* AN ARRAY OF VALUES THAT DEFINES THE VALIDABLES OBJECTS */
     ...
