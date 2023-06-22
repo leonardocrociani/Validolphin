@@ -21,7 +21,7 @@ Import the package main class
 ```javascript
 const Validolphin = require('validolphin');
 ```
-Create a config package
+Create a configuration file
 ```javascript
 const config = {
   unexpectedKeyError : <String>,      /* A CUSTOM ERROR WHEN AN OBECT TO VALIDATE HAS A KEY THAT IS NOT EXPECTED */
