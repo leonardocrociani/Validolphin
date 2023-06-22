@@ -48,3 +48,11 @@ if (validationResult.valid) {
 }
 
 ```
+
+## License
+This project is licensed under the Creative Commons Attribution 4.0 International License (CC-BY-4.0).
+
+## Issues
+If you encounter any issues or have any suggestions, please feel free to open an issue on the GitHub repository.
+
+Enjoy using Validolphin for your data validation needs!
