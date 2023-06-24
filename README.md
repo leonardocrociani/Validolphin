@@ -33,7 +33,7 @@ const config = {
       name : <String>                 /* THE NAME OF THE FUNCTION TO CALL IF YOU WANT TO VALIDATE THE ASSOCIATED OBJECT */,
       schema : {                      /* THE VALIDATION SCHEMA OF THE OBJECT */
         field : {
-          type: <Number|String|Array|Boolean>, 
+          type: <Number | String | Array | Boolean | Validolphin.types.Email | Validolphin.types.Password>, 
           minVal : <Number>,            /* SET ONLY IF type == Number */  
           maxVal : <Number>,            /* SET ONLY IF type == Number */ 
           minLen : <Number>,            /* SET ONLY IF type == String */ 
@@ -42,6 +42,8 @@ const config = {
           minEl  : <Number>,            /* SET ONLY IF type == Array */
           maxEl  : <Number>,            /* SET ONLY IF type == Array */
           homogen: <Boolean>,           /* SET ONLY IF type == Array */ 
+          matchDomain : <String>,       /* SET ONLY IF type == Validolphin.types.Email */
+          notAllowedArr : <Array>,       /* The array of not allowed domains (check the example below) SET ONLY IF type == Validolphin.types.Email */
           nullable: <Boolean>           /* DEFAULT : false */ 
         },
         ...
@@ -71,10 +73,11 @@ const config = {
     {
       name: 'user',
       schema: {
-        username: { type: String, minLen: 4, maxLen: 20 },
-        email: { type: String, maxLen: 100 },
-        age: { type: Number, minVal: 18, maxVal: 100 },
-        medals : { type: Array, nullable: true, homogen: true }
+        username: { type: String, minLen: 4, maxLen: 20 },                           // LEGAL IF value is a string and has length >= 4 and <= 20
+        email: { type: Validolphin.types.Email, notAllowedArr: ['legit.com'] },      // LEGAL IF value is an email and has domain != 'legit.com'. E.g. 'leonardo@legit.com' -> NON LEGAL
+        parentEmail : { type: Validolphin.types.Email, matchDomain : 'noxes.it' },   // LEGAL IF value is an email and has domain == 'noxes.it'. E.g. 'info@xeons.it' -> NON LEGAL 
+        age: { type: Number, minVal: 18, maxVal: 100 },                              // LEGAL IF value is a number and is >= 18 and <= 100
+        medals : { type: Array, nullable: true, homogen: true }                      // IF defined (nullable:true) the value is LEGAL IF has type Array and has all the element of the same type
       }
     }
   ]
