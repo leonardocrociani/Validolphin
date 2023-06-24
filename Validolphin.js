@@ -2,18 +2,26 @@ class Validolphin {
 
     availableKeys = ['validables', 'unexpectedKeyError', 'errorsAtTime', 'missingKeyError'];
     availableValidablesKeys = ['name', 'schema'];
+    static types = {
+        Email: { name: 'email' },
+        Password: { name: 'password' },
+    }
+    static utils = {
+        email_regular_expression : /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
+        password_regular_expression : /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    }
 
     constructor(configObject) {
         // controllo configObj
         for (const key in configObject) {
             if (!this.availableKeys.includes(key)) {
-                return { valid: false, error: 'Error in configuration object. Unexpected key -> ' + key }
+                throw new Error('Error in configuration object. Unexpected key -> ' + key )
             }
             if (key == 'validables') {
                 for (const k of configObject['validables']) {
                     for (const ks in k) {
                         if (!this.availableValidablesKeys.includes(ks)) {
-                            return { valid: false, error: 'Error in configuration object. Unexpected key in a validable object -> ' + key }
+                            throw new Error('Error in configuration object. Unexpected key in a validable object -> ' + key )
                         }
                     }
                 }
@@ -44,6 +52,7 @@ class Validolphin {
                                 errors.push('Not nullable value, find null -> ', value);
                                 continue
                             }
+                            // general type check
                             if (configObj.schema[key].type) {
                                 if (
                                     typeof value != configObj.schema[key].type.name.toLowerCase() &&
@@ -52,6 +61,7 @@ class Validolphin {
                                     errors.push(`${configObj.typeError ? configObj.typeError : 'Type error: expected ' + configObj.schema[key].type.name + ', received ' + typeof value + ' with the value'} -> ${value}`);
                                 }
                             }
+                            // specific type check
                             if (configObj.schema[key].type == String) {
                                 if (configObj.schema[key].minLen) {
                                     if (value.length < configObj.schema[key].minLen) {
@@ -106,6 +116,28 @@ class Validolphin {
                                     }
                                 }
                             }
+                            if (configObj.schema[key].type == Validolphin.types.Email) {
+                                if (Validolphin.utils.email_regular_expression.test(value)) {
+                                    if (configObj.schema[key].matchDomain) {
+                                        if (value.split('@')[1] != configObj.schema[key].matchDomain) {
+                                            errors.push('Email not matching domain -> ' + value);
+                                        }
+                                    }
+                                    if (configObj.schema[key].notAllowedArr) {
+                                        if (configObj.schema[key].notAllowedArr.includes(value.split('@')[1])) {
+                                            errors.push('Email has a not allowed domain -> '+value)
+                                        }
+                                    }
+                                }
+                                else {
+                                    errors.push('Element is not a valid email -> '+value);
+                                }
+                            }
+                            if (configObj.schema[key].type == Validolphin.types.Password) {
+                                if (!Validolphin.utils.password_regular_expression.test(value)) {
+                                    errors.push('The password must have at least 8 charaters, an upper case letter, a number and a special char ()');
+                                }
+                            }
                         }
                     }
                     if (errors.length > 0) {
@@ -126,7 +158,7 @@ class Validolphin {
             | | / / /| | / /    / // / / / / / / /   / /_/ / /_/ // //  |/ / 
             | |/ / ___ |/ /____/ // /_/ / /_/ / /___/ ____/ __  // // /|  /  
             |___/_/  |_/_____/___/_____/\\____/_____/_/   /_/ /_/___/_/ |_/   
-            Version: 1.0.5
+            Version: 1.0.6
         `)
     }
 }
