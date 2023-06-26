@@ -33,7 +33,7 @@ const config = {
       name : <String>                 /* THE NAME OF THE FUNCTION TO CALL IF YOU WANT TO VALIDATE THE ASSOCIATED OBJECT */,
       schema : {                      /* THE VALIDATION SCHEMA OF THE OBJECT */
         field : {
-          type: <Number | String | Array | Boolean | Validolphin.types.Email | Validolphin.types.Password | Validolphin.types.Domain | Validolphin.types.Phone>, 
+          type: <Number | String | Array | Boolean | [Validolphin.types]>, 
           minVal : <Number>,            /* SET ONLY IF type == Number */  
           maxVal : <Number>,            /* SET ONLY IF type == Number */ 
           minLen : <Number>,            /* SET ONLY IF type == String */ 
@@ -52,6 +52,15 @@ const config = {
     ...
   ]
 }
+```
+NOTE: here's a list of all Validolphin types. Every type use a regex for validation. All the regex are available in ```Validolphin.utils.* ```
+```javascript
+Validolphin.types.Email;
+Validolphin.types.Password;
+Validolphin.types.Domain;
+Validolphin.types.Phone;
+Validolphin.types.Iban;
+Validolphin.types.CreditCard;
 ```
 Create the validation object
 ```javascript
