@@ -42,8 +42,9 @@ const config = {
           minEl  : <Number>,            /* SET ONLY IF type == Array */
           maxEl  : <Number>,            /* SET ONLY IF type == Array */
           homogen: <Boolean>,           /* SET ONLY IF type == Array */ 
+          checkRule: <Function>,        /* A function to check al the element in the array. SET ONLY IF type == Array */
           matchDomain : <String>,       /* SET ONLY IF type == Validolphin.types.Email */
-          notAllowedArr : <Array>,       /* The array of not allowed domains (check the example below) SET ONLY IF type == Validolphin.types.Email */
+          notAllowedArr : <Array>,      /* The array of not allowed domains (check the example below) SET ONLY IF type == Validolphin.types.Email */
           nullable: <Boolean>           /* DEFAULT : false */ 
         },
         ...
@@ -77,7 +78,7 @@ const config = {
         email: { type: Validolphin.types.Email, notAllowedArr: ['legit.com'] },      // LEGAL IF value is an email and has domain != 'legit.com'. E.g. 'leonardo@legit.com' -> NON LEGAL
         parentEmail : { type: Validolphin.types.Email, matchDomain : 'noxes.it' },   // LEGAL IF value is an email and has domain == 'noxes.it'. E.g. 'info@xeons.it' -> NON LEGAL 
         age: { type: Number, minVal: 18, maxVal: 100 },                              // LEGAL IF value is a number and is >= 18 and <= 100
-        medals : { type: Array, nullable: true, homogen: true }                      // IF defined (nullable:true) the value is LEGAL IF has type Array and has all the element of the same type
+        medals : { type: Array, nullable: true, homogen: true, checkRule: function (el) { return ['GOLD', 'SILVER', 'BRONZE'].includes(el) } }                      // IF defined (nullable:true) the value is LEGAL IF has type Array and has all the element of the same type
       }
     }
   ]
