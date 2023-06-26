@@ -120,6 +120,23 @@ class Validolphin {
                                             }
                                         }
                                     }
+                                    if (configObj.schema[key].checkRule) {
+                                        if (typeof configObj.schema[key].checkRule != 'function') {
+                                            errors.push('Invalid checkRule. Must have type function');
+                                        }
+                                        else {
+                                            for (var i = 0; i < value.length; i++) {
+                                                try {
+                                                    if (!configObj.schema[key].checkRule(value[i])) {
+                                                        errors.push('Check rule failed with element -> ' + value[i] + ' at index -> ' + i);
+                                                    }
+                                                }
+                                                catch (e) {
+                                                    errors.push('Check rule failed with element -> ' + value[i] + ' at index -> ' + i);
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                                 if (configObj.schema[key].type == Validolphin.types.Email) {
                                     if (Validolphin.utils.email_regular_expression.test(value)) {
@@ -175,7 +192,7 @@ class Validolphin {
             | | / / /| | / /    / // / / / / / / /   / /_/ / /_/ // //  |/ / 
             | |/ / ___ |/ /____/ // /_/ / /_/ / /___/ ____/ __  // // /|  /  
             |___/_/  |_/_____/___/_____/\\____/_____/_/   /_/ /_/___/_/ |_/   
-            Version: 1.1.0
+            Version: 1.1.1
         `)
     }
 }
