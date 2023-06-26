@@ -5,23 +5,27 @@ class Validolphin {
     static types = {
         Email: { name: 'email' },
         Password: { name: 'password' },
+        Domain: { name: 'domain' },
+        Phone: { name: 'phone' },
     }
     static utils = {
-        email_regular_expression : /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
-        password_regular_expression : /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        email_regular_expression: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
+        password_regular_expression: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        domain_regular_expression : /^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\.(xn--)?([a-z0-9\-]{1,61}|[a-z0-9-]{1,30}\.[a-z]{2,})$/,
+        phone_regular_expression : /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/,
     }
 
     constructor(configObject) {
         // controllo configObj
         for (const key in configObject) {
             if (!this.availableKeys.includes(key)) {
-                throw new Error('Error in configuration object. Unexpected key -> ' + key )
+                throw new Error('Error in configuration object. Unexpected key -> ' + key)
             }
             if (key == 'validables') {
                 for (const k of configObject['validables']) {
                     for (const ks in k) {
                         if (!this.availableValidablesKeys.includes(ks)) {
-                            throw new Error('Error in configuration object. Unexpected key in a validable object -> ' + key )
+                            throw new Error('Error in configuration object. Unexpected key in a validable object -> ' + key)
                         }
                     }
                 }
@@ -125,17 +129,27 @@ class Validolphin {
                                     }
                                     if (configObj.schema[key].notAllowedArr) {
                                         if (configObj.schema[key].notAllowedArr.includes(value.split('@')[1])) {
-                                            errors.push('Email has a not allowed domain -> '+value)
+                                            errors.push('Email has a not allowed domain -> ' + value)
                                         }
                                     }
                                 }
                                 else {
-                                    errors.push('Element is not a valid email -> '+value);
+                                    errors.push('Element is not a valid email -> ' + value);
                                 }
                             }
                             if (configObj.schema[key].type == Validolphin.types.Password) {
                                 if (!Validolphin.utils.password_regular_expression.test(value)) {
                                     errors.push('The password must have at least 8 charaters, an upper case letter, a number and a special char ()');
+                                }
+                            }
+                            if (configObj.schema[key].type == Validolphin.types.Domain) {
+                                if (!Validolphin.utils.domain_regular_expression.test(value)) {
+                                    errors.push('The domain is not valid -> ' + value);
+                                }
+                            }
+                            if (configObj.schema[key].type == Validolphin.types.Phone) {
+                                if (!Validolphin.utils.phone_regular_expression.test(value)) {
+                                    errors.push('The phone is not valid -> ' + value);
                                 }
                             }
                         }
@@ -158,7 +172,7 @@ class Validolphin {
             | | / / /| | / /    / // / / / / / / /   / /_/ / /_/ // //  |/ / 
             | |/ / ___ |/ /____/ // /_/ / /_/ / /___/ ____/ __  // // /|  /  
             |___/_/  |_/_____/___/_____/\\____/_____/_/   /_/ /_/___/_/ |_/   
-            Version: 1.0.6
+            Version: 1.0.7
         `)
     }
 }
