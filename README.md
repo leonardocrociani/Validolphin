@@ -33,7 +33,7 @@ const config = {
       name : <String>                 /* THE NAME OF THE FUNCTION TO CALL IF YOU WANT TO VALIDATE THE ASSOCIATED OBJECT */,
       schema : {                      /* THE VALIDATION SCHEMA OF THE OBJECT */
         field : {
-          type: <Number | String | Array | Boolean | Validolphin.types.Email | Validolphin.types.Password>, 
+          type: <Number | String | Array | Boolean | Validolphin.types.Email | Validolphin.types.Password | Validolphin.types.Domain | Validolphin.types.Phone>, 
           minVal : <Number>,            /* SET ONLY IF type == Number */  
           maxVal : <Number>,            /* SET ONLY IF type == Number */ 
           minLen : <Number>,            /* SET ONLY IF type == String */ 
