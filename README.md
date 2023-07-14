@@ -45,7 +45,8 @@ const config = {
           checkRule: <Function>,        /* A function to check al the element in the array. SET ONLY IF type == Array */
           matchDomain : <String>,       /* SET ONLY IF type == Validolphin.types.Email */
           notAllowedArr : <Array>,      /* The array of not allowed domains (check the example below) SET ONLY IF type == Validolphin.types.Email */
-          nullable: <Boolean>           /* DEFAULT : false */ 
+          nullable: <Boolean>           /* DEFAULT : false */
+          err: <String>                 /* CUSTOM ERROR */ 
         },
         ...
     }
