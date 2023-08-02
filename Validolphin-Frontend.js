@@ -1,4 +1,4 @@
-
+class Validolphin {
     availableKeys = ['validables', 'unexpectedKeyError', 'errorsAtTime', 'missingKeyError'];
     availableValidablesKeys = ['name', 'schema'];
     static types = {
