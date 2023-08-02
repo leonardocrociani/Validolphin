@@ -69,7 +69,7 @@ class Validolphin {
                                 else all_errors.push('Not nullable value, find null -> ', value);
                                 continue
                             }
-                            if (value!=null&&value!=undefined) {
+                            if (value != null && value != undefined) {
                                 // general type check
                                 if (configObj.schema[key].type) {
                                     if (
@@ -81,7 +81,10 @@ class Validolphin {
                                             }
                                         }
                                         else {
-                                            errors.push(`${configObj.typeError ? configObj.typeError : 'Type error: expected ' + configObj.schema[key].type.name + ', received ' + typeof value + ' with the value'} -> ${value}`);
+                                            const expected_type = configObj.schema[key].type.name.toLowerCase();
+                                            if (!Object.values(Validolphin.types).map(el => el.name).includes(expected_type)) {
+                                                errors.push(`${configObj.typeError ? configObj.typeError : 'Type error: expected ' + configObj.schema[key].type.name + ', received ' + typeof value + ' with the value'} -> ${value}`);
+                                            }
                                         }
                                     }
                                 }
@@ -110,10 +113,10 @@ class Validolphin {
                                         }
                                     }
                                     if (isNaN(value)) {
-                                        errors.push('Illegal NaN value found -> '+key);
+                                        errors.push('Illegal NaN value found -> ' + key);
                                     }
-                                    if (isNaN(value+1)) {
-                                        errors.push('Very illegal NaN value fround ->'+key);
+                                    if (isNaN(value + 1)) {
+                                        errors.push('Very illegal NaN value fround ->' + key);
                                     }
                                 }
                                 if (configObj.schema[key].type == Array) {
@@ -208,7 +211,7 @@ class Validolphin {
                             }
                             else {
                                 if (configObj.schema[key].nullable != true) {
-                                    errors.push('Illegal value -> '+value+', key, '+key);
+                                    errors.push('Illegal value -> ' + value + ', key, ' + key);
                                 }
                             }
                             if (errors.length > 0) {
@@ -235,7 +238,7 @@ class Validolphin {
             | | / / /| | / /    / // / / / / / / /   / /_/ / /_/ // //  |/ / 
             | |/ / ___ |/ /____/ // /_/ / /_/ / /___/ ____/ __  // // /|  /  
             |___/_/  |_/_____/___/_____/\\____/_____/_/   /_/ /_/___/_/ |_/   
-            Version: 1.2.0
+            Version: 1.2.1
         `)
     }
 }
